@@ -1,4 +1,4 @@
-# LM Studio Chat tool
+# LM Studio Chat tool with RAG
 
 ## 説明
 LM Studioのサーバモードに対するチャットツール。FastAPIを使ったWebツールとして作成しています。
