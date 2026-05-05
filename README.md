@@ -162,6 +162,7 @@ Function Calling（カスタムツール）を用いて、**MCPツールを連�
 * 設定方法
 
     Chat tool の`設定`を押すと設定画面が開きます。`ファイル追加`からRAGに登録したいTXTファイル、PDFファイルを選択するとRAGとして登録されます。
+    登録したファイルは `rag_docs` フォルダに保存され、RAGデータは `rag_db` フォルダに作成されます。
 
     ![RAG設定画面イメージ](images/rag_setting.png)
 
