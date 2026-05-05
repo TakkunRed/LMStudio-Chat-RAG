@@ -1,7 +1,7 @@
 [project]
-name = "lmstudio-chat"
+name = "lmstudio-chat-RAG"
 version = "0.1.0"
-description = "LM Studio server chat web app"
+description = "LM Studio server chat web app with RAG (Retrieval-Augmented Generation) capabilities."
 requires-python = ">=3.10,<3.14"
 dependencies = [
     "fastapi>=0.115.0",
