@@ -59,6 +59,27 @@ Function Calling（カスタムツール）を用いて、**MCPツールを連�
     uv run python main.py
     ```
 
+    初回起動は、文をベクトル表現に変換するモデル `sentence_transformers`をダウンロードするので少し時間がかかります。
+
+    以下のように`Application startup complete.` が表示されたら起動されています。
+    ```
+    (lmstudio-chat-RAG) PS E:\lmstudio-chat-RAG> uv run python main.py
+    E:\lmstudio-chat-RAG\main.py:57: DeprecationWarning:
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+
+    @app.on_event("startup")
+    INFO:     Will watch for changes in these directories: ['E:\\lmstudio-chat-RAG']
+    INFO:     Uvicorn running on http://0.0.0.0:8021 (Press CTRL+C to quit)
+    INFO:     Started reloader process [27800] using WatchFiles
+    INFO:     Started server process [21652]
+    INFO:     Waiting for application startup.
+    [RAG] 初期化完了 - chunk_size=400 overlap=40 - {'total_chunks': 0, 'total_documents': 0, 'documents': []}
+    INFO:     Application startup complete.
+    ```
+
 ### 接続
 
 
@@ -161,7 +182,7 @@ Function Calling（カスタムツール）を用いて、**MCPツールを連�
 
 * 設定方法
 
-    Chat ツール の`設定`を押すと設定画面が開きます。`ファイル追加`からRAGに登録したいTXTファイル、PDFファイルを選択するとRAGとして登録されます。
+    Chat ツール の`設定`を押すと設定画面が開きます。`ファイル追加`からRAGに登録したいTXTファイル、PDFファイルを選択すると即座にRAGとして登録されます。
     登録したファイルは `rag_docs` フォルダに保存され、RAGデータは `rag_db` フォルダに作成されます。
 
     ![RAG設定画面イメージ](images/rag_setting.png)
