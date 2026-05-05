@@ -5,6 +5,8 @@ LM Studioのサーバモードに対するチャットツール。FastAPIを使�
 
 Function Calling（カスタムツール）を用いて、**MCPツールを連携**させてチャットの応答を得ることができます。
 
+**本ツールでは、RAGの機能を実装し、RAG検索とFunction Callingを同時に利用することができます。**
+
 ![チャット画面イメージ](images/chat01.png)
 
 ## 環境準備・起動方法
@@ -13,14 +15,14 @@ Function Calling（カスタムツール）を用いて、**MCPツールを連�
 
 * githubからclone
     ```
-    git clone https://github.com/TakkunRed/LMStudio-Chat.git
+    git clone https://github.com/TakkunRed/LMStudio-Chat-RAG.git
    ```
 
 ### 仮想環境を作成・アクティブ化
 
 * 仮想環境を作成
     ```
-    cd lmstudio-chat
+    cd lmstudio-chat-RAG
     uv venv
     ```
 
@@ -109,7 +111,8 @@ Function Calling（カスタムツール）を用いて、**MCPツールを連�
 * Function Calling ツール (JSON) を設定し、ツールを読み込む
 
     Function Callingを利用するために、OpenAI 互換 API が要求する 「ツールスキーマ（Function Calling 形式）」のJSONファイルを使用する必要があります。以下は、MY-MCPSV-POSTGRESで定義しているMCP Server ツールのJSONイメージです。
-    MCP Server ツールに合わせて、`Function Calling ツール (JSON)`に JSONテキストを貼り付けて、`ツール読み込み`を押下してください。「1件のツールを登録しました」と表示されればOKです。
+    MCP Server ツールに合わせて、`設定`画面の `Function Calling ツール (JSON)`に JSONテキストを貼り付ける、もしくは`読み込み`からファイルを指定してJSONテキストを読み込み、`保存`を押下してください。「保存しました（n件）」と一時的に表示されればOKです。
+    この情報は、`tools_config.json` に保存され、次回起動時以降も自動的に読み込まれます。
     ```
     [
         {
@@ -151,3 +154,38 @@ Function Calling（カスタムツール）を用いて、**MCPツールを連�
     ```
 
     ![チャット画面イメージ](images/chat02.png)
+
+## RAGを利用する場合の設定と利用方法
+
+### 設定方法
+
+* 設定方法
+
+    Chat tool の`設定`を押すと設定画面が開きます。`ファイル追加`からRAGに登録したいTXTファイル、PDFファイルを選択するとRAGとして登録されます。
+
+    ![RAG設定画面イメージ](images/rag_setting.png)
+
+* 機能・パラメータ説明
+
+    * `状態確認`
+        登録されているRAGの情報を取得します。ドキュメントの数とチャンク数、読み込まれているドキュメント名が表示されます。
+    
+    * `フォルダ再スキャン`
+        登録されているドキュメントを再インデックス化します。下記のチャンク設定を修正したときなどに押下すると、チャンク設定に応じて再インデックス化されます。
+
+    * `チャンクサイズ(単語数)`
+        1チャンクの最大単語数を設定します。デフォルト 400、設定可能範囲 64〜2048。
+
+    * `チャンクオーバーラップ（単語数）`
+        隣接チャンクの重複単語数を設定します。デフォルト 40、設定可能範囲 0〜512。
+
+    * `チャンク設定を保存`
+        チャンク設定を `rag_config.json` に保存します。
+
+### 利用方法
+
+Chat tool の `RAG ドキュメント検索` の`オン`にチェックを入れて、メッセージを送信します。
+RAGを検索すると、チャット回答の最後に参考にしたドキュメントが表示されます。
+5つのチャンクをモデルに渡すようにしています。
+
+![チャット画面イメージ](images/chat03.png)
